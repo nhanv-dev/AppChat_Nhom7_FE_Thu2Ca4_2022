@@ -1,1 +1,1 @@
-# ChatApp-Group7
+# Chat App - Angular
