@@ -1,6 +1,11 @@
 //src\app\app.component.ts
 import {Component} from '@angular/core';
 import {WebsocketService} from "./services/websocket.service";
+import {environment} from "../environments/environment";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
+import {filter} from "rxjs-compat/operator/filter";
+import {map} from "rxjs-compat/operator/map";
 
 @Component({
   selector: "app-root",
@@ -10,31 +15,11 @@ import {WebsocketService} from "./services/websocket.service";
 })
 
 export class AppComponent {
-  title = 'App chat';
+  title = 'App Chat';
   content = '';
   received = [];
   sent = [];
 
-  constructor(private WebsocketService: WebsocketService) {
-    WebsocketService.messages.subscribe(msg => {
-      // @ts-ignore
-      this.received.push(msg);
-      console.log("Response from websocket: " + msg);
-    });
-  }
-
-  sendMsg() {
-    let message = {
-      action: 'onchat',
-      data: {
-        event: 'LOGIN',
-        data: {user: 'long', pass: '12345'}
-      }
-    };
-
-    // @ts-ignore
-    this.sent.push(message);
-    // @ts-ignore
-    this.WebsocketService.messages.next(message);
+  constructor(private wsService: WebsocketService) {
   }
 }
