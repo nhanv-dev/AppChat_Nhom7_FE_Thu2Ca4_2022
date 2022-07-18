@@ -1,10 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Observable, Observer} from 'rxjs';
-import {AnonymousSubject} from 'rxjs/internal/Subject';
-import {Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
-
-const CHAT_URL = "ws://140.238.54.136:8080/chat/chat";
+import * as Rx from 'rxjs';
+import {environment} from "../../environments/environment";
 
 export interface Message {
   source: string;
@@ -13,19 +9,14 @@ export interface Message {
 
 @Injectable()
 export class WebsocketService {
-  private subject: AnonymousSubject<MessageEvent> | undefined;
-  public messages: Subject<Message>;
+  private subject: Rx.Subject<MessageEvent> | undefined;
+  public messages: Rx.Subject<Message> | undefined;
 
   constructor() {
-    this.messages = <Subject<Message>>this.connect(CHAT_URL).pipe(
-      map((response: MessageEvent): Message => {
-        console.log(response.data);
-        return JSON.parse(response.data);
-      })
-    );
+
   }
 
-  public connect(url: string): AnonymousSubject<MessageEvent> {
+  public connect(url: string): Rx.Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
       console.log("Successfully connected: " + url);
@@ -33,9 +24,9 @@ export class WebsocketService {
     return this.subject;
   }
 
-  private create(url: string): AnonymousSubject<MessageEvent> {
+  private create(url: string): Rx.Subject<MessageEvent> {
     let ws = new WebSocket(url);
-    let observable = new Observable((obs: Observer<MessageEvent>) => {
+    let observable = new Rx.Observable((obs: Rx.Observer<MessageEvent>) => {
       ws.onmessage = obs.next.bind(obs);
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
@@ -46,12 +37,10 @@ export class WebsocketService {
       complete: null,
       next: (data: Object) => {
         console.log('Message sent to websocket: ', data);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(data));
-        }
+        if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(data));
       }
     };
     // @ts-ignore
-    return new AnonymousSubject<MessageEvent>(observer, observable);
+    return new Rx.Subject<MessageEvent>(observer, observable);
   }
 }
