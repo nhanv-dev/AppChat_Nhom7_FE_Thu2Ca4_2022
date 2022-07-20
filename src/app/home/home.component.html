@@ -1,1 +1,41 @@
-<p>home works!</p>
+<div class="container">
+  <div class="box-chat">
+    <div class="row g-0">
+      <div class="col-3">
+        <div class="box-chat__sidebar">
+          <h3>Chats</h3>
+          <form class="box-chat__search">
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" placeholder="Tìm kiếm bạn bè hoặc nhóm chat...">
+          </form>
+          <div *ngFor="let data of users" class="box-chat__user">
+            <div class="box-chat__user__avatar">
+              <img src="https://toppng.com/uploads/preview/avatar-png-115540218987bthtxfhls.png"
+                   alt="avatar">
+            </div>
+            <div class="h-100 d-flex flex-column justify-content-between">
+              <p class="box-chat__user__name">{{data.name}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="box-chat"></div>
+        Tôi: {{user.user}}
+
+        <form [formGroup]="messageForm" (ngSubmit)="sendChat()">
+          <div class="mb-3">
+            Người: <input type="text" class="form-control" formControlName="to" required>
+
+            Tin nhắn: <input type="text" class="form-control" formControlName="mes" required>
+          </div>
+          <button type="submit">Gửi</button>
+        </form>
+      </div>
+      <div *ngFor="let data of received" class="row g-4">
+        <p class="col-3">{{data.name}}</p>
+        <p class="col-9">{{data.mes}}</p>
+      </div>
+    </div>
+  </div>
+</div>

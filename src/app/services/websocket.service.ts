@@ -1,22 +1,15 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import * as Rx from 'rxjs';
-import {environment} from "../../environments/environment";
-
-export interface Message {
-  source: string;
-  content: string;
-}
+import {AnonymousSubject} from "rxjs/internal/Subject";
 
 @Injectable()
 export class WebsocketService {
-  private subject: Rx.Subject<MessageEvent> | undefined;
-  public messages: Rx.Subject<Message> | undefined;
+  private subject: AnonymousSubject<MessageEvent> | undefined;
 
   constructor() {
-
   }
 
-  public connect(url: string): Rx.Subject<MessageEvent> {
+  public connect(url: string): AnonymousSubject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
       console.log("Successfully connected: " + url);
@@ -24,15 +17,15 @@ export class WebsocketService {
     return this.subject;
   }
 
-  private create(url: string): Rx.Subject<MessageEvent> {
-    let ws = new WebSocket(url);
-    let observable = new Rx.Observable((obs: Rx.Observer<MessageEvent>) => {
+  private create(url: string): AnonymousSubject<MessageEvent> {
+    const ws = new WebSocket(url);
+    const observable = new Rx.Observable((obs: Rx.Observer<MessageEvent>) => {
       ws.onmessage = obs.next.bind(obs);
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
       return ws.close.bind(ws);
     });
-    let observer = {
+    const observer = {
       error: null,
       complete: null,
       next: (data: Object) => {
@@ -40,7 +33,8 @@ export class WebsocketService {
         if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(data));
       }
     };
+
     // @ts-ignore
-    return new Rx.Subject<MessageEvent>(observer, observable);
+    return new AnonymousSubject<MessageEvent>(observer, observable);
   }
 }

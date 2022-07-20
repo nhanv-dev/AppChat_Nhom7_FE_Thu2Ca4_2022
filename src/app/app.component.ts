@@ -1,25 +1,19 @@
 //src\app\app.component.ts
 import {Component} from '@angular/core';
 import {WebsocketService} from "./services/websocket.service";
-import {environment} from "../environments/environment";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
-import {filter} from "rxjs-compat/operator/filter";
-import {map} from "rxjs-compat/operator/map";
+import {ChatService} from "./services/chat.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
-  providers: [WebsocketService]
+  providers: [WebsocketService, ChatService]
 })
 
 export class AppComponent {
-  title = 'App Chat';
-  content = '';
-  received = [];
-  sent = [];
+  public title = 'App Chat';
 
-  constructor(private wsService: WebsocketService) {
+  constructor() {
   }
+
 }
