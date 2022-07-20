@@ -1,4 +1,4 @@
-//src\app\app.component.ts
+  //src\app\app.component.ts
 import {Component} from '@angular/core';
 import {WebsocketService} from "./services/websocket.service";
 import {environment} from "../environments/environment";

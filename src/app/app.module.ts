@@ -9,13 +9,15 @@ import {RegisterComponent} from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {WebsocketService} from "./services/websocket.service";
 import {ChatService} from "./services/chat.service";
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
