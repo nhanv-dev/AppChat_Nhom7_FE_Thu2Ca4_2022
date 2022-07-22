@@ -6,9 +6,9 @@ export const environment = {
   production: false,
   CHAT_URL: "ws://140.238.54.136:8080/chat/chat",
   event: {
-    LOGIN: 'LOGIN',
-    LOGOUT: 'LOGOUT',
-    RE_LOGIN: 'RE_LOGIN',
+    LOGIN: "LOGIN",
+    LOGOUT: "LOGOUT",
+    RE_LOGIN: "RE_LOGIN",
     REGISTER: "REGISTER",
     SEND_CHAT: "SEND_CHAT",
     CREATE_ROOM: "CREATE_ROOM",

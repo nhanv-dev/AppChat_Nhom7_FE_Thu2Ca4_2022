@@ -20,20 +20,21 @@ export class LoginComponent implements OnInit {
 
   constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private router: Router) {
     if (authenticationService.getToken()) router.navigateByUrl('/home')
-    chatService.messages.subscribe(message => {
+  }
+
+  ngOnInit(): void {
+    this.chatService.messages.subscribe(message => {
       console.log("Response from websocket: ", message);
       if (message.event === environment.event.LOGIN && message.status === 'success') {
         const data: any = {
           user: this.loginForm.controls.username.value,
           code: message.data?.RE_LOGIN_CODE
         }
-        authenticationService.setToken(JSON.stringify(data))
-        router.navigateByUrl('/home');
+        this.authenticationService.setToken(JSON.stringify(data))
+        this.authenticationService.isUserAuthenticated = true;
+        this.router.navigateByUrl('/home');
       }
     });
-  }
-
-  ngOnInit(): void {
   }
 
   login() {

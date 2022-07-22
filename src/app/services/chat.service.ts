@@ -21,62 +21,64 @@ export class ChatService {
     );
   }
 
-  public login(data: any) {
+  public async login(data: any) {
     const {user, pass} = data;
     const message = {action: this.action, data: {event: environment.event.LOGIN, data: {user, pass}}};
     this.messages.next(message);
   }
 
-  public reLogin(data: any) {
+  public async reLogin(data: any) {
     const {user, code} = data;
-    const message = {action: this.action, data: {event: environment.event.RE_LOGIN, data: {user, code}}};
-    this.messages.next(message);
+    if (user && code) {
+      const message = {action: this.action, data: {event: environment.event.RE_LOGIN, data: {user, code}}};
+      this.messages.next(message);
+    }
   }
 
-  public logout() {
+  public async logout() {
     const message = {action: this.action, data: {event: environment.event.LOGOUT}}
     this.messages.next(message);
   }
 
-  public register(data: any) {
+  public async register(data: any) {
     const {user, pass} = data;
     const message = {action: this.action, data: {event: environment.event.REGISTER, data: {user, pass}}};
     this.messages.next(message);
   }
 
-  public sendChat(data: any) {
+  public async sendChat(data: any) {
     const {type, to, mes} = data;
     const message = {action: this.action, data: {event: environment.event.SEND_CHAT, data: {type, to, mes}}};
     this.messages.next(message);
   }
 
-  public createRoom(name: string) {
+  public async createRoom(name: string) {
     const message = {action: this.action, data: {event: environment.event.CREATE_ROOM, data: {name}}};
     this.messages.next(message);
   }
 
-  public getRoomMessage(name: string, page: number) {
+  public async getRoomMessage(name: string, page: number) {
     const message = {action: this.action, data: {event: environment.event.GET_ROOM_CHAT_MES, data: {name, page}}}
     this.messages.next(message);
   }
 
-  public joinRoom(name: string) {
+  public async joinRoom(name: string) {
     const message = {action: this.action, data: {event: environment.event.JOIN_ROOM, data: {name}}}
     this.messages.next(message);
   }
 
-  public getPeopleMessage(name: string, page: number) {
+  public async getPeopleMessage(name: string, page: number) {
     const message = {action: this.action, data: {event: environment.event.GET_PEOPLE_CHAT_MES, data: {name, page}}}
     this.messages.next(message);
   }
 
-  public checkUser(data: any) {
+  public async checkUser(data: any) {
     const {user} = data;
     const message = {action: this.action, data: {event: environment.event.CHECK_USER, data: {user}}}
     this.messages.next(message);
   }
 
-  public getUserList() {
+  public async getUserList() {
     const message = {action: this.action, data: {event: environment.event.GET_USER_LIST}};
     this.messages.next(message);
   }

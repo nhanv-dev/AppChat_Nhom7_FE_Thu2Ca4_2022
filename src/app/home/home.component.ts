@@ -14,17 +14,18 @@ export class HomeComponent implements OnInit {
   public send: any[] = [];
   public received: any[] = [];
   public user: any = undefined;
-  public other: any = undefined;
-  public users: any[] = [
-    {name: 'Võ Chí Nguyên'},
-    {name: 'Huỳnh Quốc Nhàn'}
-  ];
+  public connectedChatting: any = undefined;
+  public users: any[] = [];
   public messageForm = new FormGroup({
     to: new FormControl(),
     mes: new FormControl(),
   })
 
   constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private router: Router) {
+    if (!authenticationService.isUserAuthenticated) {
+      authenticationService.removeToken();
+      router.navigateByUrl('/login');
+    }
     chatService.messages.subscribe(message => {
       const {event, status, data} = message
       console.log("Response from websocket: ", message);
@@ -36,46 +37,58 @@ export class HomeComponent implements OnInit {
           to: this.messageForm.controls.to.value,
         })
       }
-      if (event === environment.event.GET_USER_LIST && status === 'success') {
-        this.users = data;
-        console.log(this.users);
-      }
-      if (event === environment.event.CHECK_USER && status !== 'success') {
-        authenticationService.removeToken();
-        router.navigateByUrl('/login');
-      }
+      if (event === environment.event.GET_USER_LIST && status === 'success') this.setUsers(data);
+      if (event === environment.event.CHECK_USER && status !== 'success') this.logout();
     });
-    this.checkUser()
   }
 
-  checkUser() {
-    const token: any = this.authenticationService.getToken();
-    const data: any = {user: token.user}
-    this.chatService.checkUser(data)
-  }
 
   ngOnInit(): void {
-    if (this.authenticationService.getToken()) {
+    const dataUser = this.authenticationService.getToken();
+    if (dataUser) {
       this.user = this.authenticationService.getToken();
       this.chatService.getUserList();
+    } else {
+      this.logout();
     }
   }
 
-  connectPeople(name: string) {
+  async reLogin() {
+    const dataUser = this.authenticationService.getToken();
+    if (dataUser) {
+
+    }
+  }
+
+  async setUsers(data: any) {
+    this.users = data;
+  }
+
+  async connectPeople(name: string) {
 
   }
 
-  sendChat() {
-    this.chatService.sendChat({
+  async checkUser() {
+    const dataUser: any = this.authenticationService.getToken();
+    const data: any = {user: dataUser.user}
+    await this.chatService.checkUser(data)
+  }
+
+  async sendChat() {
+    await this.chatService.sendChat({
       type: 'people',
       to: this.messageForm.controls.to.value,
       mes: this.messageForm.controls.mes.value
     });
   }
 
-  logout() {
-    this.chatService.logout();
+  async handleSendChat() {
+
+  }
+
+  async logout() {
     this.authenticationService.removeToken();
-    this.router.navigateByUrl('/login');
+    await this.chatService.logout();
+    await this.router.navigateByUrl('/login');
   }
 }
