@@ -1,133 +1,104 @@
-*{
+
+* {
   width: 100%;
-  height: 100%;
-  background-color: rgba(247,247,255,1);
-  margin:auto;
+  margin: auto;
   box-sizing: border-box;
   position: relative;
 }
-app-root{
-  /*background-color: rgba(247,247,255,1);*/
 
-}
-.title{
-  font-size: 30px!important;
+.title {
+  font-size: 24px;
   color: #495057;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 
+.sub-title {
+  font-size: 16px;
+  color: #495057;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 500;
 }
-.login{
-  margin-top: 10px;
+
+.login {
+  padding: 24px;
+  height: 100vh;
   box-sizing: border-box;
+  background-color: rgba(247, 247, 255, 1) !important;
 }
-.center{
+
+
+.logo {
   text-align: center;
 }
-.logo{
-  text-align: center;
-}
-img{
+
+.logo img {
   width: 150px;
-  height: 30px;
-  /*margin: auto;*/
   margin-bottom: 30px;
-  /*padding-top: 100px;*/
 }
-.form_login{
+
+.form-login {
   background-color: white;
-  width: 380px;
-  margin-top: 10px;
   box-sizing: border-box;
-  padding: 10px;
-
-
+  width: 100%;
+  max-width: 440px;
+  padding: 16px 24px;
 }
-.text_style{
+
+.text-style {
   width: 300px;
   height: 30px;
-  border:solid 2px #f5f7fb;
+  border: solid 2px #f5f7fb;
   background-color: white;
   border-radius: 5px;
 
 }
-.username,.password{
-  width: 460px;
-  background-color: black;
-  margin: 15px 0;
-  font-size: 20px;
-}
-.password span{
-  width: 100px;
-  text-align: right;
-}
-.line{
-  display: flex;
-}
-.line a{
-  text-align: right;
-  background-color: white;
-  text-decoration: none;
+
+.username, .password {
+  width: 100%;
+  margin-bottom: 12px;
 }
 
-.button_signup{
-  width: 360px;
+.username label, .password label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input i {
+  width: 24px;
+}
+
+.input input {
+  flex: 1;
+}
+
+.button-signup {
   height: 40px;
+  width: 100%;
+  margin-top: 16px;
   font-size: 20px;
   border: solid 2px #5b54bf;
   border-radius: 4px;
   background-color: #6159cb;
   color: #fff;
 }
-.border_form{
-  background-color: white !important;
-  width: 400px;
-  padding: 10px;
-  margin-bottom: 50px;
-}
-.form_login div{
-  width: 360px;
-  background-color: white;
-}
 
-.check input{
-  width: 15px;
-  height: 15px;
-  margin: 2px;
+.bottom-message {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 500;
 }
-.check{
-  margin: 10px 0px;
-  width: 100px;
-}
-h3{
-  color: #495057;
-  /*margin: 10px;*/
-  width: 500px;
-}
-.color_text{
-  color: #7a7f9a;
-  font-size: 15px;
-  /*margin:10px*/
-}
-.center ,.check{
-  font-size: 20px;
-}
-.enter_text{
-  display: flex;
-}
-.enter_text i{
-  width: 25px;
-  height: 25px;
-  border: solid 1px black;
-  text-align: center;
-  padding: 1px;
-}
-.center p{
-  margin-bottom: 10px;
-}
-.center a{
-  text-decoration: none;
-}
-
 
 
 

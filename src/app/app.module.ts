@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
@@ -9,7 +8,7 @@ import {RegisterComponent} from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {WebsocketService} from "./services/websocket.service";
 import {ChatService} from "./services/chat.service";
-// import { ProductComponent } from './product/product.component';
+import {AuthenticationService} from "./services/authentication.service";
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import {ChatService} from "./services/chat.service";
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    // ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +23,7 @@ import {ChatService} from "./services/chat.service";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [WebsocketService, ChatService],
+  providers: [WebsocketService, ChatService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

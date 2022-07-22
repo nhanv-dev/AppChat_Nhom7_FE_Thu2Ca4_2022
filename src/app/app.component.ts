@@ -1,25 +1,25 @@
-  //src\app\app.component.ts
-import {Component} from '@angular/core';
+//src\app\app.component.ts
+import {Component, OnInit} from '@angular/core';
 import {WebsocketService} from "./services/websocket.service";
-import {environment} from "../environments/environment";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
-import {filter} from "rxjs-compat/operator/filter";
-import {map} from "rxjs-compat/operator/map";
+import {ChatService} from "./services/chat.service";
+import {AuthenticationService} from "./services/authentication.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
-  providers: [WebsocketService]
+  providers: [WebsocketService, ChatService]
 })
 
-export class AppComponent {
-  title = 'App Chat';
-  content = '';
-  received = [];
-  sent = [];
+export class AppComponent implements OnInit {
+  public title = 'App Chat';
 
-  constructor(private wsService: WebsocketService) {
+  constructor(private chatService: ChatService, private authenticationService: AuthenticationService) {
+
+  }
+
+  ngOnInit() {
+    const dataUser = this.authenticationService.getToken();
+    this.chatService.reLogin(dataUser)
   }
 }
